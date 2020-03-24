@@ -42,11 +42,25 @@ function changePlayer () {
     roundScore = 0;
 }
 
+function startNewGame () {
+    document.querySelector('.dice').classList.add('hide');
+    hide();
+    for (let i = 0; i<2; i++) {
+    score[i] = 0;
+    document.querySelector(`#current-${i}`).textContent = '0';
+    document.querySelector(`#score-${i}`).textContent = '0';
+    document.querySelector(`#name-${i}`).textContent = `Player${i+1}`;
+    document.querySelector(`#name-${i}`).classList.remove('greenText');
+    }
+    roll.disabled = false;
+    hold.disabled = false;
+}
+
 roll.addEventListener('click', function(){
     hide();
     let diceImage = document.querySelector('.dice');
     diceImage.classList.remove('hide');
-    let diceArray = [2,1,3,2,1,4,3,1,2,5,1,4,3,1,2,6,1,5,4,1,3,2,1];
+    let diceArray = [1,2,3,2,1,4,3,2,1,5,4,1,3,2,1,6,5,1,4,3,2,1];
     let diceIndex = Math.floor(Math.random()*diceArray.length);
     let dice = diceArray[diceIndex];
     diceImage.src = `images/dice-${dice}.png`;
@@ -60,26 +74,28 @@ roll.addEventListener('click', function(){
 });
 
 hold.addEventListener('click', function(){
-    if (activePlayer === 0) {
-        score[0] += roundScore;
-        document.querySelector('#score-0').textContent = score[0];
-        } else {
-        score[1] += roundScore;
-        document.querySelector('#score-1').textContent = score[1];
+    score[activePlayer] += roundScore;
+
+    document.querySelector(`#score-${activePlayer}`).textContent = score[activePlayer];
+
+    if (score[activePlayer]>=21) {
+        document.querySelector('.dice').classList.add('hide');
+        document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
+        document.querySelector(`#name-${activePlayer}`).classList.add('greenText');
+
+        roll.disabled = true;
+        hold.disabled = true;
+
+        action.classList.remove('hide');
+        action.textContent = `Press 'New Game'!`;
+    }else {
+        actionCall();
+        messageCall();
+        changePlayer();
     }
-    actionCall();
-    messageCall();
-    changePlayer();
 })
 
-newGame.addEventListener('click', function(){
-    document.querySelector('.dice').classList.add('hide');
-    hide();
-    for (let i = 0; i<2; i++) {
-    score[i] = 0;
-    document.querySelector(`#current-${i}`).textContent = '0';
-    document.querySelector(`#score-${i}`).textContent = '0';
-    }
-})
+newGame.addEventListener('click', startNewGame);
+
 
 

@@ -152,9 +152,9 @@ i {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    color: #EB4D4D;
+    color: #222;
     text-align: center;
-    font-weight: 100;
+    font-weight: 300;
     font-size: 23px;
 }
 
@@ -176,11 +176,9 @@ i {
     position: static;
 }
 
-h2 {
-    color: #EB4D4D;
-    text-align: center;
-    font-weight: 100;
-    font-size: 25px;
+.greenText {
+    color: rgb(62, 163, 124);
+    font-weight: 300;
 }
 
 span {
