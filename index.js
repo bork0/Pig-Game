@@ -79,7 +79,7 @@ function holding () {
 
     document.querySelector(`#score-${activePlayer}`).textContent = score[activePlayer];
 
-    if (score[activePlayer]>=21) {
+    if (score[activePlayer]>=101) {
         document.querySelector('.dice').classList.add('hide');
         document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
         document.querySelector(`#name-${activePlayer}`).classList.add('greenText');
