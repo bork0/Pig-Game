@@ -43,20 +43,21 @@ function changePlayer () {
 }
 
 function startNewGame () {
-    document.querySelector('.dice').classList.add('hide');
-    hide();
-    for (let i = 0; i<2; i++) {
-    score[i] = 0;
-    document.querySelector(`#current-${i}`).textContent = '0';
-    document.querySelector(`#score-${i}`).textContent = '0';
-    document.querySelector(`#name-${i}`).textContent = `Player${i+1}`;
-    document.querySelector(`#name-${i}`).classList.remove('greenText');
-    }
-    roll.disabled = false;
-    hold.disabled = false;
+    // document.querySelector('.dice').classList.add('hide');
+    // hide();
+    // for (let i = 0; i<2; i++) {
+    // score[i] = 0;
+    // document.querySelector(`#current-${i}`).textContent = '0';
+    // document.querySelector(`#score-${i}`).textContent = '0';
+    // document.querySelector(`#name-${i}`).textContent = `Player${i+1}`;
+    // document.querySelector(`#name-${i}`).classList.remove('greenText');
+    // }
+    // roll.disabled = false;
+    // hold.disabled = false;
+    location.reload();
 }
 
-roll.addEventListener('click', function(){
+function rolling () {
     hide();
     let diceImage = document.querySelector('.dice');
     diceImage.classList.remove('hide');
@@ -71,14 +72,14 @@ roll.addEventListener('click', function(){
     } else {
         changePlayer();
     }
-});
+}
 
-hold.addEventListener('click', function(){
+function holding () {
     score[activePlayer] += roundScore;
 
     document.querySelector(`#score-${activePlayer}`).textContent = score[activePlayer];
 
-    if (score[activePlayer]>=101) {
+    if (score[activePlayer]>=21) {
         document.querySelector('.dice').classList.add('hide');
         document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!';
         document.querySelector(`#name-${activePlayer}`).classList.add('greenText');
@@ -88,10 +89,31 @@ hold.addEventListener('click', function(){
 
         action.classList.remove('hide');
         action.textContent = `Press 'New Game'!`;
+
+        window.addEventListener('keypress', startNewGame);
+
     }else {
         actionCall();
         messageCall();
         changePlayer();
+    }
+}
+
+roll.addEventListener('click', rolling);
+
+window.addEventListener('keypress', function (e){
+    if (e.key === ' ' || e.key === 'spacebar') {
+        e.preventDefault();
+        rolling();
+    }
+})
+
+hold.addEventListener('click', holding);
+
+window.addEventListener('keypress', function(e){
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        holding();
     }
 })
 
